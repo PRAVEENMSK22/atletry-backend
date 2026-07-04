@@ -1,0 +1,40 @@
+
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: atletry
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - atletry-network
+
+  backend:
+    image: 377152274788.dkr.ecr.us-east-1.amazonaws.com/atletry-backend:latest
+    container_name: atletry
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://postgres:5432/atletry
+      DB_USERNAME: postgres
+      DB_PASSWORD: admin
+      JWT_SECRET: YWxlcnRyeS1zdXBlci1zZWNyZXQta2V5LW11c3QtYmUtYXQtbGVhc3QtMjU2LWJpdHM=
+    networks:
+      - atletry-network
+
+volumes:
+  postgres_data:
+
+networks:
+  atletry-network:
