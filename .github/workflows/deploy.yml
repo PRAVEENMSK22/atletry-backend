@@ -55,3 +55,9 @@ jobs:
             docker compose up -d --force-recreate
 
             docker image prune -f
+      - name: Verify image contents
+        run: |
+          docker create --name verify atletry-backend:latest
+          docker cp verify:/app/app.jar app.jar
+          jar tf app.jar | grep TestController
+          docker rm verify
