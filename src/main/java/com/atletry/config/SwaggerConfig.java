@@ -37,7 +37,7 @@ public class SwaggerConfig {
                                 """)
                         .contact(new Contact().name("Atletry Team").email("dev@atletry.com")))
                 .servers(List.of(
-                        new Server().url("http://localhost:8080/api/v1").description("Local"),
+                        new Server().url("http://44.214.180.245/api/v1").description("Production"),
                         new Server().url("https://api.atletry.com/api/v1").description("Production")))
                 .addSecurityItem(new SecurityRequirement().addList(BEARER))
                 .components(new Components()
